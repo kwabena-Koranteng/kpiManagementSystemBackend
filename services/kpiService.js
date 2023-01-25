@@ -12,7 +12,7 @@ class kpiService{
     constructor(){}
 
     async save(payload){
-        const conn = await mongoose.connect(process.env.MONGO_URL, mongooseConnectionSettings);
+        const conn = await mongoose.connect("mongodb://kobbykoranteng:password1234@cluster0-shard-00-00.84itn.mongodb.net:27017,cluster0-shard-00-01.84itn.mongodb.net:27017,cluster0-shard-00-02.84itn.mongodb.net:27017/?ssl=true&replicaSet=atlas-d1tm3s-shard-0&authSource=admin&retryWrites=true", mongooseConnectionSettings);
 
         const model = conn.model('kpi',kpiSchema);
 
@@ -28,7 +28,7 @@ class kpiService{
 
     async findById(id){
         if(id){
-            const conn = await mongoose.connect(process.env.MONGO_URL , mongooseConnectionSettings);
+            const conn = await mongoose.connect("mongodb://kobbykoranteng:password1234@cluster0-shard-00-00.84itn.mongodb.net:27017,cluster0-shard-00-01.84itn.mongodb.net:27017,cluster0-shard-00-02.84itn.mongodb.net:27017/?ssl=true&replicaSet=atlas-d1tm3s-shard-0&authSource=admin&retryWrites=true" , mongooseConnectionSettings);
 
             const model = conn.model('kpi',kpiSchema);
 
@@ -44,7 +44,7 @@ class kpiService{
 
         if(id && comment){
 
-            const conn = await mongoose.connect(process.env.MONGO_URL , mongooseConnectionSettings);
+            const conn = await mongoose.connect("mongodb://kobbykoranteng:password1234@cluster0-shard-00-00.84itn.mongodb.net:27017,cluster0-shard-00-01.84itn.mongodb.net:27017,cluster0-shard-00-02.84itn.mongodb.net:27017/?ssl=true&replicaSet=atlas-d1tm3s-shard-0&authSource=admin&retryWrites=true" , mongooseConnectionSettings);
 
             const model = conn.model('kpi',kpiSchema);
 
@@ -59,7 +59,7 @@ class kpiService{
 
         if(id && status){
 
-            const conn = await mongoose.connect(process.env.MONGO_URL , mongooseConnectionSettings);
+            const conn = await mongoose.connect("mongodb://kobbykoranteng:password1234@cluster0-shard-00-00.84itn.mongodb.net:27017,cluster0-shard-00-01.84itn.mongodb.net:27017,cluster0-shard-00-02.84itn.mongodb.net:27017/?ssl=true&replicaSet=atlas-d1tm3s-shard-0&authSource=admin&retryWrites=true" , mongooseConnectionSettings);
 
             const model = conn.model('kpi',kpiSchema);
 
@@ -72,7 +72,7 @@ class kpiService{
 
     async findAllByUser(id){
 
-        const conn = await mongoose.connect(process.env.MONGO_URL, mongooseConnectionSettings);
+        const conn = await mongoose.connect("mongodb://kobbykoranteng:password1234@cluster0-shard-00-00.84itn.mongodb.net:27017,cluster0-shard-00-01.84itn.mongodb.net:27017,cluster0-shard-00-02.84itn.mongodb.net:27017/?ssl=true&replicaSet=atlas-d1tm3s-shard-0&authSource=admin&retryWrites=true", mongooseConnectionSettings);
 
         const model = conn.model('kpi',kpiSchema);
 
@@ -83,7 +83,7 @@ class kpiService{
 
     async findByIdAndDelete(id){
 
-        const conn = await mongoose.connect(process.env.MONGO_URL , mongooseConnectionSettings);
+        const conn = await mongoose.connect("mongodb://kobbykoranteng:password1234@cluster0-shard-00-00.84itn.mongodb.net:27017,cluster0-shard-00-01.84itn.mongodb.net:27017,cluster0-shard-00-02.84itn.mongodb.net:27017/?ssl=true&replicaSet=atlas-d1tm3s-shard-0&authSource=admin&retryWrites=true" , mongooseConnectionSettings);
 
         const model = conn.model('kpi',kpiSchema);
 
@@ -95,7 +95,7 @@ class kpiService{
     }
 
     async getAllkpiByemail(email,page,size){
-        const conn = await mongoose.connect(process.env.MONGO_URL , mongooseConnectionSettings);
+        const conn = await mongoose.connect("mongodb://kobbykoranteng:password1234@cluster0-shard-00-00.84itn.mongodb.net:27017,cluster0-shard-00-01.84itn.mongodb.net:27017,cluster0-shard-00-02.84itn.mongodb.net:27017/?ssl=true&replicaSet=atlas-d1tm3s-shard-0&authSource=admin&retryWrites=true" , mongooseConnectionSettings);
 
         const model = conn.model('kpi',kpiSchema);
 
@@ -109,7 +109,7 @@ class kpiService{
 
         let updatedKpi = null;
 
-        const conn = await mongoose.connect(process.env.MONGO_URL , mongooseConnectionSettings);
+        const conn = await mongoose.connect("mongodb://kobbykoranteng:password1234@cluster0-shard-00-00.84itn.mongodb.net:27017,cluster0-shard-00-01.84itn.mongodb.net:27017,cluster0-shard-00-02.84itn.mongodb.net:27017/?ssl=true&replicaSet=atlas-d1tm3s-shard-0&authSource=admin&retryWrites=true" , mongooseConnectionSettings);
 
         const kpiModel = conn.model('kpi',kpiSchema);
 

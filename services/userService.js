@@ -8,7 +8,7 @@ class UserService {
     constructor(){}
 
     async save(payload){
-        const conn = await mongoose.connect(process.env.MONGO_URL, mongooseConnectionSettings);
+        const conn = await mongoose.connect("mongodb://kobbykoranteng:password1234@cluster0-shard-00-00.84itn.mongodb.net:27017,cluster0-shard-00-01.84itn.mongodb.net:27017,cluster0-shard-00-02.84itn.mongodb.net:27017/?ssl=true&replicaSet=atlas-d1tm3s-shard-0&authSource=admin&retryWrites=true", mongooseConnectionSettings);
 
         const model = conn.model('users', UserSchema);
 
@@ -22,7 +22,7 @@ class UserService {
     }
    
     async findByEmail(email){
-        const conn = await mongoose.connect(process.env.MONGO_URL,mongooseConnectionSettings );
+        const conn = await mongoose.connect("mongodb://kobbykoranteng:password1234@cluster0-shard-00-00.84itn.mongodb.net:27017,cluster0-shard-00-01.84itn.mongodb.net:27017,cluster0-shard-00-02.84itn.mongodb.net:27017/?ssl=true&replicaSet=atlas-d1tm3s-shard-0&authSource=admin&retryWrites=true",mongooseConnectionSettings );
 
         const model = conn.model('users', UserSchema);
 
@@ -32,7 +32,7 @@ class UserService {
     }
 
     async findById(id){
-        const conn = await mongoose.connect(process.env.MONGO_URL,mongooseConnectionSettings );
+        const conn = await mongoose.connect("mongodb://kobbykoranteng:password1234@cluster0-shard-00-00.84itn.mongodb.net:27017,cluster0-shard-00-01.84itn.mongodb.net:27017,cluster0-shard-00-02.84itn.mongodb.net:27017/?ssl=true&replicaSet=atlas-d1tm3s-shard-0&authSource=admin&retryWrites=true",mongooseConnectionSettings );
 
         const model = conn.model('users', UserSchema);
 
@@ -70,7 +70,7 @@ class UserService {
 
     async findByEmail(email){
         
-        const conn = await mongoose.connect(process.env.MONGO_URL, mongooseConnectionSettings);
+        const conn = await mongoose.connect("mongodb://kobbykoranteng:password1234@cluster0-shard-00-00.84itn.mongodb.net:27017,cluster0-shard-00-01.84itn.mongodb.net:27017,cluster0-shard-00-02.84itn.mongodb.net:27017/?ssl=true&replicaSet=atlas-d1tm3s-shard-0&authSource=admin&retryWrites=true", mongooseConnectionSettings);
 
         const model = conn.model('users', UserSchema);
 
