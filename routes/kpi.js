@@ -171,7 +171,7 @@ kpiRoute.get('/kpi/:id',authenticationService,async(req,res)=>{
 })
 
 
-kpiRoute.patch('/update/kpi',authenticationService,async(req,res)=>{
+kpiRoute.patch('/update/kpi/:id',authenticationService,async(req,res)=>{
  
     let status = 200;
     let message = "";
@@ -185,11 +185,19 @@ kpiRoute.patch('/update/kpi',authenticationService,async(req,res)=>{
     const userService = new UserService();
 
     const username = req.username;
+    
+    const id = req.params.id;
 
     const verifyUser = await userService.findByEmail(username);
 
     if(verifyUser.role !== "user"){
 
+        const kpiUser = await userService.findById(payload.id);
+
+        payload ={...payload , createdBy:verifyUser._id , user: kpiUser}
+        payload['enabled'] =true;
+        payload['status'] ="Pending";
+        
         const kpiService = new KpiService();
 
         const validate = await kpiService.createdKpiValidate(payload);
@@ -197,7 +205,7 @@ kpiRoute.patch('/update/kpi',authenticationService,async(req,res)=>{
         const errors =  validate.length;
 
         if(errors == 0){
-            const updatedKpi = await kpiService.findByIdAndUpdate(payload.id,payload);
+            const updatedKpi = await kpiService.findByIdAndUpdate(id,payload);
 
             if(updatedKpi){
     
@@ -208,7 +216,7 @@ kpiRoute.patch('/update/kpi',authenticationService,async(req,res)=>{
             }
         }else{
             let counter = 0;
-            val.forEach(error => {
+            validate.forEach(error => {
                 if(counter < (errors - 1)){
                     message += (counter + 1) + ". " + error + ", ";
                 } else {
@@ -236,7 +244,7 @@ kpiRoute.patch('/update/kpi',authenticationService,async(req,res)=>{
 })
 
 
-kpiRoute.delete('/kpi',authenticationService,async(req,res)=>{
+kpiRoute.delete('/kpi/:id',authenticationService,async(req,res)=>{
  
     let status = 200;
     let message = "";
@@ -246,6 +254,8 @@ kpiRoute.delete('/kpi',authenticationService,async(req,res)=>{
 
     let payload = req.body;
     const data = new Array();
+
+    const id = req.params.id;
 
     const userService = new UserService();
 
@@ -257,7 +267,7 @@ kpiRoute.delete('/kpi',authenticationService,async(req,res)=>{
 
         const kpiService = new KpiService();
         
-        const deletedkpi = await kpiService.findByIdAndDelete(payload.id);
+        const deletedkpi = await kpiService.findByIdAndDelete(id);
 
         if(deletedkpi){
                 data.push(kpiService.toKpi(deletedkpi));
@@ -279,7 +289,7 @@ kpiRoute.delete('/kpi',authenticationService,async(req,res)=>{
 
 })
 
-kpiRoute.put('/comment',authenticationService,async(req,res)=>{
+kpiRoute.put('/comment/:id',authenticationService,async(req,res)=>{
     let status = 200;
     let message = "";
     let page = 0;
@@ -290,9 +300,11 @@ kpiRoute.put('/comment',authenticationService,async(req,res)=>{
 
     const payload = req.body;
 
+    const id = req.params.id;
+
     const data = new Array();
 
-    const addComment = await kpiService.findByIdandAddComment(payload.id,payload.comment);
+    const addComment = await kpiService.findByIdandAddComment(id,payload.comment);
 
     if(addComment){
         data.push(kpiService.toKpi(addComment))

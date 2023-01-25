@@ -116,11 +116,19 @@ class kpiService{
         const kpiDetails = await kpiModel.findById(id);
 
         if(kpiDetails){
-            
-            const kpi = this.updateKpi(kpiModel,payload);
+        
+            const kpi = ({
+                title : payload.title,
+                details : payload.details,
+                type :payload.type,
+                timelines : payload.timelines,
+                comments :payload.comments,
+                status :payload.status
+            })
 
-            await kpiModel.findByIdAndUpdate({'_id':kpiDetails._id}, kpi);
+          const hei =  await kpiModel.findOneAndUpdate({'_ID': kpiDetails._id}, kpi);
 
+            console.log(hei)
             updatedKpi = await kpiModel.findById(id).populate('user').exec();
 
         }
@@ -147,18 +155,13 @@ class kpiService{
         return kpiModel
     }
 
-    updateKpi(model,payload){
-        const kpiModel = new model();
-        kpiModel.title =payload.title,
-        kpiModel.details =payload.details,
-        kpiModel.type =payload.type,
-        kpiModel.timelines = payload.timelines,
-        kpiModel.comments = payload.comments
-
-        kpiModel.updatedOn = new Date()
-
-        return kpiModel;
-    }
+//   const updateKpi =({
+//         title :payload.title,
+//         details : payload.details,
+//         type :payload.type,
+//         timelines : payload.timelines,
+//         comments :payload.comments
+//     })
 
     async createdKpiValidate(payload){
         const errors = new Array();
