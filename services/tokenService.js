@@ -19,21 +19,21 @@ class TokenService {
 
         const privateKey = "MIICdgIBADANBgkqhkiG9w0BAQEFAASCAmAwggJcAgEAAoGBAKKJ/W7lFNLK/QH6rHRI28WNCM/CdJCkXFIxFDewx9hn1TT6+vQYtkO7jBd507VYzFtM0YTMMYErX47CFHEm0nEXwlkRxqhWlqFV8V+Sf11/6bnO6w7JKkn7FyhNE8iFCrpkV5Pf+OV4KVPqrQ5UmqbhGz915LKb1qBoxYr1yTSbAgMBAAECgYAceqcgNh1W7eA055It8dIoJBUGKiE4csQGVrkfJOdvQIo39T3hZS8SYRsjxeHVZZCw8p3Hceu+oTXmEpV4WgAHLwKGfpZbduImM+UVDQIyuiwG0E7Cd/8Ngz1U/DtPEET5b7KlMk3jilskPf1mjwokVE2TcMB3uOusbV5pzi/AsQJBAN/hmWi1xMRSPSTbIMP15eKs5o5s6fTiTvFv9wezN9nxEZHQcxIFEgo5AychhmfF3yaYVqHFMBFxp9ViNC9oWIkCQQC523+V39GvtCBIpSZknQwPf7qy77xjWfAm3IldF14up76cWh6IGp7goBERRO+81thk+Nl7r37DqI7hOCbljhMDAkEAx05ISv5egEOSKUhmf+1dzRENY0e0c4wwqSF68kDq/LtuX7gJaMZYy/77Po/K3oE56lr97J/l7fGXbxAw0u96uQJAA2OQOQBix2xmZky0nYMLlEDE+7xJWBpsuZit3IevjPQ8EofGJL8vhHMGvKTgJjZYrcan2IyDqDerm0m109u6VwJARAb6LcQxTDox+2BsJ7JSGnm1vo7BjGi9iJKNaj/S4HsD6sE6wCHM8ebuHnzrzLe4/hcWS5y6ve0Sqen5WX3wkA==";
 
-        var value = null;
+        // var value = null;
 
-        try{
-            value = nodeRsaService.decrypt(encryptedPayload, privateKey);
+        // try{
+        //     value = nodeRsaService.decrypt(encryptedPayload, privateKey);
 
-        }catch(err){
-            console.log("error decryptng authentication request payload. message : "+ err.toString());
-            token = new TokenResponse(500, "error occurred while decrypting user credentials. message: "+ err.toString(),"","",0);
+        // }catch(err){
+        //     console.log("error decryptng authentication request payload. message : "+ err.toString());
+        //     token = new TokenResponse(500, "error occurred while decrypting user credentials. message: "+ err.toString(),"","",0);
 
-        }
+        // }
 
-        const isValue = (value== null);
-        console.log("get token request processing : is decrypted value present : "+ (value != null));
+        // const isValue = (value== null);
+        // console.log("get token request processing : is decrypted value present : "+ (value != null));
 
-        if(!isValue){
+        // if(!isValue){
             const payloadAsObject = encryptedPayload;
             
             const username = (payloadAsObject.hasOwnProperty('email')) ? payloadAsObject.email : null;
@@ -103,9 +103,9 @@ class TokenService {
             else {
                  token = new TokenResponse(400, "invalid email or password", "", "", 0);
                  }                 
-        } else {
-            token = new TokenResponse(400, "invalid email or password", "", "", 0);
-        }
+        // } else {
+        //     token = new TokenResponse(400, "invalid email or password", "", "", 0);
+        // }
 
         return token;
     }

@@ -6,9 +6,12 @@ class NodeRsaService {
 
         key.importKey(privatekey , 'pkcs8-private');
 
+        console.log(key);
+
         const isPrivateKey  = key.isPrivate();
 
-        return key.decrypt(payload.data , 'utf8');
+
+        return key.decrypt(payload.data , 'utf8',);
 
     }
 }
