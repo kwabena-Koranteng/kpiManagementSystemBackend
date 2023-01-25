@@ -6,6 +6,7 @@ const UserService = require('../services/userService');
 const userRoute = express.Router();
 const TokenService = require('../services/tokenService');
 const BcryptService = require('../services/bcryptService');
+const authenticationService = require('../services/authenticationService');
 
 
 userRoute.post('/users',async(req,res)=>{
@@ -89,6 +90,45 @@ userRoute.post('/user/token', async(req,res)=>{
     res.header("Content-Type","application/json");
     res.status(status);
     res.json(tokenResponse);
+});
+
+//get userinfo
+
+
+userRoute.get('/user',authenticationService,async(req,res)=>{
+    let status = 200;
+    let message = "";
+    let page =0;
+    let size =0;
+    let totalCount =0;
+
+    const email = req.username;
+
+    const userService  = new UserService();
+
+    const data = new Array();
+
+    if(email){
+
+        const foundUser = await userService.findByEmail(email);
+
+        if(foundUser){
+            data.push(userService.toUser(foundUser));
+            message ="success";
+            totalCount=1
+        }else{
+            message ="invalid user"
+            status =400
+        }
+    
+    }
+
+    const userResponse = new UserResponse(status, message , page,size , totalCount , data);
+
+    res.header("Content-Type" , "application/json");
+    res.status(status);
+    res.json(userResponse);
+
 })
 
 
