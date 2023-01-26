@@ -355,7 +355,7 @@ kpiRoute.put('/comment/:id',authenticationService,async(req,res)=>{
 
     const data = new Array();
 
-    const addComment = await kpiService.findByIdandAddComment(id,payload.comment);
+    const addComment = await kpiService.findByIdandAddComment(id,payload.comments);
 
     if(addComment){
         data.push(kpiService.toKpi(addComment))
