@@ -104,6 +104,16 @@ class kpiService{
         return kpi;
     }
 
+    async getAllkpi(page,size){
+        const conn = await mongoose.connect("mongodb://kobbykoranteng:password1234@cluster0-shard-00-00.84itn.mongodb.net:27017,cluster0-shard-00-01.84itn.mongodb.net:27017,cluster0-shard-00-02.84itn.mongodb.net:27017/?ssl=true&replicaSet=atlas-d1tm3s-shard-0&authSource=admin&retryWrites=true" , mongooseConnectionSettings);
+
+        const model = conn.model('kpi',kpiSchema);
+
+        const kpi = await model.paginate({'enabled':true},{page:page,limit:size, populate: ['user']});
+
+        return kpi;
+    }
+
 
     async findByIdAndUpdate(id,payload){
 

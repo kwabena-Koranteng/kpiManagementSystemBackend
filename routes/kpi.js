@@ -52,7 +52,7 @@ kpiRoute.post('/kpi/add',authenticationService,async(req,res)=>{
                 }
              }else{
                 let counter = 0;
-                val.forEach(error => {
+                validate.forEach(error => {
                 if(counter < (errors - 1)){
                     message += (counter + 1) + ". " + error + ", ";
                 } else {
@@ -88,12 +88,7 @@ kpiRoute.get('/kpi',authenticationService,async(req,res)=>{
     let size = (req.query.size) ? req.query.size : 10;
     let totalCount = 0;
 
-    var groupBy = function(xs, key) {
-        return xs.reduce(function(rv, x) {
-          (rv[x[key]] = rv[x[key]] || []).push(x);
-          return rv;
-        }, {});
-      };
+  
 
     // let payload = req.body;
     const data = new Array();
@@ -110,20 +105,35 @@ kpiRoute.get('/kpi',authenticationService,async(req,res)=>{
 
     if(findUser){
 
-        const getKpis = await kpiService.getAllkpiByemail(findUser._id,page,size);
+        const getKpi = await kpiService.getAllkpi(page,size);
 
         if(findUser.role !== "user"){
-            if(getKpis){
-                totalCount = getKpis.total;
-                const docs = getKpis.docs;
+
+            if(getKpi){
+                totalCount = getKpi.total;
+                const docs = getKpi.docs;
         
                 if(docs.length >0){
                     docs.forEach((i,x)=>{
-                        arraybefore.push(i)
+                        arraybefore.push(kpiService.toKpi(i))
                     })
-                console.log(groupBy(arraybefore, '{user.department}'));
+             
+                    let ans = arraybefore.reduce((agg,curr) => {
+                        let found = agg.find((x) => x.kpi[0].user.department === curr.user.department);
+                        if(found){
+                          found.kpi.push(curr);
+                        }
+                        else{
+                           agg.push({
+                           department : curr.user.department,
+                           kpi : [curr]
+                           });
+                        }
+                         return agg;
+                        },[]);
 
-                //  data.push(result);
+                        // console.log(ans);
+                  data.push(ans);
                     message ="success";
                 }else{
                     message ="No Kpi(s) found";
@@ -138,6 +148,7 @@ kpiRoute.get('/kpi',authenticationService,async(req,res)=>{
 
         }else{
 
+            const getKpis = await kpiService.getAllkpiByemail(findUser._id,page,size);
             if(getKpis){
                 totalCount = getKpis.total;
                 const docs = getKpis.docs;
