@@ -391,6 +391,50 @@ kpiRoute.put('/update/status',authenticationService,async(req,res)=>{
 
 
 
+kpiRoute.get('/users/kpi/:id',authenticationService,async(req,res)=>{
+    let status = 200;
+    let message = "";
+    let page = 0;
+    let size = 0;
+    let totalCount = 0;
+
+    const kpiService = new KpiService();
+
+    const payload = req.body;
+
+   let data = null;
+
+    const id = req.params.id;
+
+if(id){
+    const getKpis = await kpiService.findAllByUser(id);
+
+
+    if(getKpis){
+        data =getKpis;
+        message ="success";
+        totalCount= getKpis.length
+    }else{
+        message ="No kpi(s) found";
+        status =404
+    }
+}else{
+    message ="invalid user id passed";
+    status=404
+}
+  
+
+
+    const kpiResponse = new KpiResponse(status,message,page,size,totalCount,data);
+
+    res.header("Content-Type" , "application/json");
+    res.status(status);
+    res.json(kpiResponse);
+
+})
+
+
+
 
 
 
