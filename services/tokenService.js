@@ -84,7 +84,6 @@ class TokenService {
                                 const tokenKey = jwt.sign({
                                     data : currentUser.email, 
                                     iat : Math.floor(Date.now() / 1000) - 30, 
-                                    exp: expiresIn
                                 }, key);
 
                                 token = new TokenResponse(200, "success", username, tokenKey, expiresIn, role,isDefault,userService.toUser(currentUser));
