@@ -1,5 +1,5 @@
 class TokenResponse {
-    constructor(status, message, email, token, expires, role,isDefault){
+    constructor(status, message, email, token, expires, role,isDefault,userinfo){
         this.status = status;
         this.message = message;
         this.email = email;
@@ -7,6 +7,7 @@ class TokenResponse {
         this.expires = expires;
         this.role = role;
         this.isDefault =isDefault;
+        this.userinfo = userinfo;
     }
 
     toJSON(){
@@ -17,7 +18,8 @@ class TokenResponse {
             token : this.token,
             expires : this.expires,
             role : this.role,
-            isDefault :this.isDefault
+            isDefault :this.isDefault,
+            userInfo : this.userinfo
         }
     }
 }

@@ -5,6 +5,7 @@ const kpiRoute = express.Router();
 const KpiService = require('../services/kpiService');
 const authenticationService = require('../services/authenticationService');
 const UserService = require('../services/userService');
+const e = require('express');
 
 
 kpiRoute.post('/kpi/add',authenticationService,async(req,res)=>{
@@ -87,8 +88,17 @@ kpiRoute.get('/kpi',authenticationService,async(req,res)=>{
     let size = (req.query.size) ? req.query.size : 10;
     let totalCount = 0;
 
+    var groupBy = function(xs, key) {
+        return xs.reduce(function(rv, x) {
+          (rv[x[key]] = rv[x[key]] || []).push(x);
+          return rv;
+        }, {});
+      };
+
     // let payload = req.body;
     const data = new Array();
+
+    const arraybefore = new Array();
 
     const kpiService = new KpiService();
 
@@ -102,25 +112,55 @@ kpiRoute.get('/kpi',authenticationService,async(req,res)=>{
 
         const getKpis = await kpiService.getAllkpiByemail(findUser._id,page,size);
 
-        if(getKpis){
-            totalCount = getKpis.total;
-            const docs = getKpis.docs;
-    
-            if(docs.length >0){
-                docs.forEach((i,x)=>{
-                    data.push(kpiService.toKpi(i))
-                })
-                message ="success";
+        if(findUser.role !== "user"){
+            if(getKpis){
+                totalCount = getKpis.total;
+                const docs = getKpis.docs;
+        
+                if(docs.length >0){
+                    docs.forEach((i,x)=>{
+                        arraybefore.push(i)
+                    })
+                console.log(groupBy(arraybefore, '{user.department}'));
+
+                //  data.push(result);
+                    message ="success";
+                }else{
+                    message ="No Kpi(s) found";
+                    status =400;
+                }
+             
+              
             }else{
                 message ="No Kpi(s) found";
                 status =400;
             }
-         
-          
+
         }else{
-            message ="No Kpi(s) found";
-            status =400;
+
+            if(getKpis){
+                totalCount = getKpis.total;
+                const docs = getKpis.docs;
+        
+                if(docs.length >0){
+                    docs.forEach((i,x)=>{
+                        data.push(kpiService.toKpi(i))
+                    })
+                    message ="success";
+                }else{
+                    message ="No Kpi(s) found";
+                    status =400;
+                }
+             
+              
+            }else{
+                message ="No Kpi(s) found";
+                status =400;
+            }
         }
+
+
+       
     }
 
 
@@ -354,7 +394,11 @@ kpiRoute.put('/update/status',authenticationService,async(req,res)=>{
     res.header("Content-Type" , "application/json");
     res.status(status);
     res.json(kpiResponse);
-})
+});
+
+
+
+
 
 
 
