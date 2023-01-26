@@ -136,7 +136,7 @@ class kpiService{
                 status :payload.status
             })
 
-          const hei =  await kpiModel.findOneAndUpdate({'_ID': kpiDetails._id}, kpi);
+          const hei =  await kpiModel.findOneAndUpdate({'_id': kpiDetails._id}, kpi);
 
             console.log(hei)
             updatedKpi = await kpiModel.findById(id).populate('user').exec();
