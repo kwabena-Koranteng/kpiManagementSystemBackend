@@ -31,6 +31,17 @@ class UserService {
         return user;
     }
 
+
+    async findAllUsers(page,size){
+        const conn = await mongoose.connect("mongodb://kobbykoranteng:password1234@cluster0-shard-00-00.84itn.mongodb.net:27017,cluster0-shard-00-01.84itn.mongodb.net:27017,cluster0-shard-00-02.84itn.mongodb.net:27017/?ssl=true&replicaSet=atlas-d1tm3s-shard-0&authSource=admin&retryWrites=true",mongooseConnectionSettings );
+
+        const model = conn.model('users', UserSchema);
+
+        const user = await model.paginate({},{page:page , limit:size});
+
+        return user;
+    }
+
     async findById(id){
         const conn = await mongoose.connect("mongodb://kobbykoranteng:password1234@cluster0-shard-00-00.84itn.mongodb.net:27017,cluster0-shard-00-01.84itn.mongodb.net:27017,cluster0-shard-00-02.84itn.mongodb.net:27017/?ssl=true&replicaSet=atlas-d1tm3s-shard-0&authSource=admin&retryWrites=true",mongooseConnectionSettings );
 
@@ -176,7 +187,22 @@ class UserService {
         user.createdOn,
         user.updatedOn): new User();
     }
+
+
+    groupBy = (array, key) => {
+        // Return the end result
+        return array.reduce((result, currentValue) => {
+          // If an array already present for key, push it to the array. Else create an array and push the object
+          (result[currentValue[key]] = result[currentValue[key]] || []).push(
+            currentValue
+          );
+          // Return the current iteration `result` value, this will be taken as next iteration `result` value and accumulate
+          return result;
+        }, {}); // empty object is the initial value for result object
+      };
 }
+
+
 
 module.exports = UserService;
 

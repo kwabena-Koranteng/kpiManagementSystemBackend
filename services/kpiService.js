@@ -76,7 +76,7 @@ class kpiService{
 
         const model = conn.model('kpi',kpiSchema);
 
-        const pagedResults = await model.find({'user':id}).populate('user');
+        const pagedResults = await model.find({'user':id , "enabled": true}).populate('user');
 
         return pagedResults
     }

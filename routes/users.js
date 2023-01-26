@@ -132,4 +132,63 @@ userRoute.get('/user',authenticationService,async(req,res)=>{
 })
 
 
+userRoute.get('/users',authenticationService,async(req,res)=>{
+    let status = 200;
+    let message = "";
+    let page = (req.query.page) ? req.query.page : 1;
+    let size = (req.query.size) ? req.query.size : 10;
+    let totalCount =0;
+
+    const email = req.username;
+
+    const userService  = new UserService();
+
+    let data = null;
+
+    const arraybefore = new Array();
+
+
+    const foundUser = await userService.findByEmail(email);
+
+    if(foundUser.role !== "user"){
+        if(email){
+
+            const foundUsers = await userService.findAllUsers(page,size);
+    
+            if(foundUsers){
+               
+                totalCount = foundUsers.total;
+                const docs = foundUsers.docs;
+    
+                if(docs.length > 0){
+                    docs.forEach((i,x)=>{
+                        arraybefore.push(userService.toUser(i))
+                    })
+                data = userService.groupBy(arraybefore,'department')
+    
+                }
+                message ="success";
+            }else{
+                message ="invalid user"
+                status =400
+            }
+        
+        }
+      
+
+    }else{
+        message ="You do not have permission";
+        status =404;
+    }
+
+   
+    const userResponse = new UserResponse(status, message , page,size , totalCount , data);
+
+    res.header("Content-Type" , "application/json");
+    res.status(status);
+    res.json(userResponse);
+
+})
+
+
 module.exports =userRoute

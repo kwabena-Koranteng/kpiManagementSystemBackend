@@ -115,25 +115,8 @@ kpiRoute.get('/kpi',authenticationService,async(req,res)=>{
         
                 if(docs.length >0){
                     docs.forEach((i,x)=>{
-                        arraybefore.push(kpiService.toKpi(i))
+                        data.push(kpiService.toKpi(i))
                     })
-             
-                    let ans = arraybefore.reduce((agg,curr) => {
-                        let found = agg.find((x) => x.kpi[0].user.department === curr.user.department);
-                        if(found){
-                          found.kpi.push(curr);
-                        }
-                        else{
-                           agg.push({
-                           department : curr.user.department,
-                           kpi : [curr]
-                           });
-                        }
-                         return agg;
-                        },[]);
-
-                        // console.log(ans);
-                  data.push(ans);
                     message ="success";
                 }else{
                     message ="No Kpi(s) found";
@@ -303,7 +286,6 @@ kpiRoute.delete('/kpi/:id',authenticationService,async(req,res)=>{
     let size = 0;
     let totalCount = 0;
 
-    let payload = req.body;
     const data = new Array();
 
     const id = req.params.id;
