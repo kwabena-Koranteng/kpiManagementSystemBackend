@@ -191,4 +191,40 @@ userRoute.get('/users',authenticationService,async(req,res)=>{
 })
 
 
+userRoute.post('/resetpassword',authenticationService,async(req,res)=>{
+    let status = 200;
+    let message = "";
+    let page = 0;
+    let size = 0;
+    let totalCount = 0;
+
+    const email = req.username;
+
+    const payload = req.body;
+
+    const data  = new Array();
+
+    const userService = new UserService();
+
+    const userInfo =  await userService.findByEmailAndUpdatePassword(email,payload.password);
+
+    if(userInfo){
+
+        data.push(userService.toUser(userInfo));
+        message ="success";
+        totalCount =1;
+    }else{
+        message ="unable to update password";
+        status =404;
+    }
+
+    const userResponse = new UserResponse(status, message , page,size , totalCount , data);
+
+    res.header("Content-Type" , "application/json");
+    res.status(status);
+    res.json(userResponse);
+
+})
+
+
 module.exports =userRoute

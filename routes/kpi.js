@@ -423,8 +423,6 @@ if(id){
     status=404
 }
   
-
-
     const kpiResponse = new KpiResponse(status,message,page,size,totalCount,data);
 
     res.header("Content-Type" , "application/json");
