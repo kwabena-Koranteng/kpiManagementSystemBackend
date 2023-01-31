@@ -136,7 +136,7 @@ userRoute.get('/users',authenticationService,async(req,res)=>{
     let status = 200;
     let message = "";
     let page = (req.query.page) ? req.query.page : 1;
-    let size = (req.query.size) ? req.query.size : 10;
+    let size = (req.query.size) ? req.query.size : 100;
     let totalCount =0;
 
     const email = req.username;
@@ -165,7 +165,7 @@ userRoute.get('/users',authenticationService,async(req,res)=>{
                         arraybefore.push(userService.toUser(i))
                     })
                 data = userService.groupBy(arraybefore,'department')
-    
+
                 }
                 message ="success";
             }else{
