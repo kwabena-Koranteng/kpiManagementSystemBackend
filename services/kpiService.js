@@ -196,13 +196,13 @@ class kpiService{
                 errors.push('invalid or missing title')
             }
 
-            if(details){
-                if(details.trim() === "" && details.trim().length() === 0){
-                    errors.push('invalid or empty details passed')
-                }
-            }else{
-                errors.push('invalid or missing details')
-            }
+            // if(details){
+            //     if(details.trim() === "" && details.trim().length() === 0){
+            //         errors.push('invalid or empty details passed')
+            //     }
+            // }else{
+            //     errors.push('invalid or missing details')
+            // }
 
             if(type){
                 if(type.trim() === "" && type.trim().length() === 0){
